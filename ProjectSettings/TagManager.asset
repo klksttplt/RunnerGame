@@ -6,6 +6,7 @@ TagManager:
   tags:
   - JumpingArea
   - WallJumpingArea
+  - Destructable
   layers:
   - Default
   - TransparentFX

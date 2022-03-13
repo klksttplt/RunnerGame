@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,7 +10,9 @@ public class Player : MonoBehaviour
     public float verticalWallJumpingSpeed = 5f;
     public float horizontalWallJumpingSpeed = 3.5f;
     public float startSpeed = 2f;
-    
+
+    public Action onCollectCoin;
+
     private float _speed;
     private float _jumpingTimer = 0f;
 
@@ -21,24 +20,24 @@ public class Player : MonoBehaviour
     private bool _jumping = false;
     private bool _canWallJump = false;
     private bool _wallJumpLeft = false;
+    private bool _pause = false;
 
     // Start is called before the first frame update
     private void Start()
     {
+        _speed = startSpeed;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        _speed = startSpeed;
-        
         //Accelerate the player 
         _speed += acceleration * Time.deltaTime;
         if (_speed > movementSpeed) _speed = movementSpeed;
 
         //Move horizontally
         GetComponent<Rigidbody>().velocity = new Vector3(
-            _speed,
+            _pause ? 0 : _speed,
             GetComponent<Rigidbody>().velocity.y,
             GetComponent<Rigidbody>().velocity.z
         );
@@ -48,6 +47,9 @@ public class Player : MonoBehaviour
         if (pressingJumpButton)
             if (_canJump)
                 _jumping = true;
+
+        //Checking if player is paused
+        if (_pause && pressingJumpButton) _pause = false;
 
         //Make the player jump
         if (_jumping)
@@ -82,6 +84,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Pause()
+    {
+        _pause = true;
+    }
+
+    private void OnTriggerEnter(Collider otherCollider)
+    {
+        if (otherCollider.transform.GetComponent<Coin>() != null)
+        {
+            Destroy(otherCollider.gameObject);
+            onCollectCoin();
+        }
+    }
+
     private void OnTriggerStay(Collider otherCollider)
     {
         //Floor collider
@@ -91,6 +107,7 @@ public class Player : MonoBehaviour
             _jumping = false;
             _jumpingTimer = 0;
         }
+        //Wall collider
         else if (otherCollider.CompareTag("WallJumpingArea"))
         {
             _canWallJump = true;
@@ -100,9 +117,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit(Collider otherCollider)
     {
-        if (otherCollider.CompareTag("WallJumpingArea"))
-        {
-            _canWallJump = false;
-        }
+        //Wall collider
+        if (otherCollider.CompareTag("WallJumpingArea")) _canWallJump = false;
     }
 }
