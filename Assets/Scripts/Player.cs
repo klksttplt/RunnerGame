@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class Player : MonoBehaviour
 {
@@ -72,8 +74,12 @@ public class Player : MonoBehaviour
 
         //Player can jump
         if (pressingJumpButton)
+        {
             if (_canJump)
+            {
                 _jumping = true;
+            }
+        }
 
         //Checking if player is paused
         if (_pause && pressingJumpButton) _pause = false;
@@ -98,10 +104,11 @@ public class Player : MonoBehaviour
         //Make the player wall jump
         if (_canWallJump)
         {
-            _speed = 0;
-
+            //_speed = 0;
+            
             if (pressingJumpButton)
             {
+                //Debug.Log("Pressing jump wall");
                 _canWallJump = false;
 
                 _speed = _wallJumpLeft ? -horizontalWallJumpingSpeed : horizontalWallJumpingSpeed;
