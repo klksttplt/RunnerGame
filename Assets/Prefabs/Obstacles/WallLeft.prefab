@@ -57,8 +57,8 @@ GameObject:
   - component: {fileID: 5189594165206542555}
   - component: {fileID: 5189594165206542552}
   m_Layer: 0
-  m_Name: WallRight
-  m_TagString: WallJumpingArea
+  m_Name: WallLeft
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,14 +70,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5189594165206542558}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -3.83, y: 4.784, z: -14.8}
   m_LocalScale: {x: 1, y: 10.56828, z: 1}
   m_Children:
   - {fileID: 5189594164772837424}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &5189594165206542554
 MeshFilter:
   m_ObjectHideFlags: 0

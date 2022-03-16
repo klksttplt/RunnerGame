@@ -19,15 +19,15 @@ public class Brick : MonoBehaviour
     {
     }
 
-    private void OnDestroy()
+    private void OnKill()
     {
         if (hasCoin)
         {
-           /* var coin = Instantiate(CoinPrefab);
-            coin.transform.position = transform.position + new Vector3(0, 0.7f, 0);
+            var coin = Instantiate(CoinPrefab);
+            coin.transform.position = transform.position + new Vector3(0, 2, 0);
 
             var c = coin.GetComponent<Coin>();
-            c.Vanish();*/
+            c.Vanish();
 
             GameObject.Find("Player").GetComponent<Player>().onCollectCoin();
             //Destroy(c);

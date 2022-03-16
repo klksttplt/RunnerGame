@@ -20,6 +20,7 @@ public class Destructable : MonoBehaviour
 
     private void OnTriggerEnter(Collider otherCollider)
     {
+        target.SendMessage("OnKill");
         if (otherCollider.transform.GetComponent<Player>() != null) Destroy(target.gameObject);
     }
 }

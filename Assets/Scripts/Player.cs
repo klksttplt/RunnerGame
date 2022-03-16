@@ -80,7 +80,8 @@ public class Player : MonoBehaviour
         //Player can jump
         if (pressingJumpButton)
             if (_canJump)
-                _jumping = true;
+                Jump();
+
 
         //Checking if player is paused
         if (_pause && pressingJumpButton) _pause = false;
@@ -120,6 +121,19 @@ public class Player : MonoBehaviour
             }
     }
 
+
+    public void Jump(bool hitEnemy = false)
+    {
+        _jumping = true;
+
+        if (hitEnemy)
+            GetComponent<Rigidbody>().velocity = new Vector3(
+                GetComponent<Rigidbody>().velocity.x,
+                _jumpingSpeed,
+                GetComponent<Rigidbody>().velocity.z
+            );
+    }
+
     public void Pause()
     {
         _pause = true;
@@ -156,8 +170,8 @@ public class Player : MonoBehaviour
         //Player dies
         if (otherCollider.GetComponent<Enemy>())
         {
-           
-            Kill();
+            var enemy = otherCollider.GetComponent<Enemy>();
+            if (enemy.Dead == false) Kill();
         }
     }
 
