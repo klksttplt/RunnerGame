@@ -846,7 +846,7 @@ MonoBehaviour:
   movementSpeedRight: 8
   movementSpeedLeft: 2
   normalJumpingSpeed: 6
-  longJumpingSpeed: 111
+  longJumpingSpeed: 11
   jumpDuration: 0.35
   verticalWallJumpingSpeed: 5
   horizontalWallJumpingSpeed: 5

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -48,12 +49,15 @@ public class Player : MonoBehaviour
         //Accelerate the player 
         _speed += acceleration * Time.deltaTime;
 
+        //Assigning target speed
         var targetSpeed = movementSpeed;
+        //Speed ups
         if (_onSpeedAreaLeft)
             targetSpeed = movementSpeedLeft;
 
         else if (_onSpeedAreaRight) targetSpeed = movementSpeedRight;
 
+        //Deacceleration
         if (_speed > targetSpeed) _speed -= deacceleration * Time.deltaTime;
 
         //Move horizontally
@@ -66,8 +70,9 @@ public class Player : MonoBehaviour
         //Check for input
         var pressingJumpButton = Input.GetMouseButtonDown(0) || Input.GetKeyDown("space");
 
+        //Player can jump
         if (pressingJumpButton)
-            if ( _canJump)
+            if (_canJump)
                 _jumping = true;
 
         //Checking if player is paused
@@ -76,22 +81,17 @@ public class Player : MonoBehaviour
         //Make the player jump
         if (_jumping)
         {
-            
             _jumpingTimer += Time.deltaTime;
 
             if (pressingJumpButton && _jumpingTimer < jumpDuration)
             {
-                if (_onLongJump)
-                {
-                    _jumpingSpeed = longJumpingSpeed;
-                }
+                if (_onLongJump) _jumpingSpeed = longJumpingSpeed;
 
                 GetComponent<Rigidbody>().velocity = new Vector3(
                     GetComponent<Rigidbody>().velocity.x,
                     _jumpingSpeed,
                     GetComponent<Rigidbody>().velocity.z
                 );
-                
             }
         }
 
@@ -122,12 +122,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider otherCollider)
     {
+        //Collecting coins
         if (otherCollider.transform.GetComponent<Coin>() != null)
         {
             Destroy(otherCollider.gameObject);
             onCollectCoin();
         }
 
+        //Speed up areas
         if (otherCollider.GetComponent<SpeedArea>() != null)
         {
             var speedArea = otherCollider.GetComponent<SpeedArea>();
@@ -135,7 +137,8 @@ public class Player : MonoBehaviour
             else if (speedArea.direction == Direction.Right) _onSpeedAreaRight = true;
         }
 
-        if (otherCollider.GetComponent<LongJumpBlock>() != null) _onLongJump = true;
+        //Long jump area
+        if (otherCollider.CompareTag("LongJumpArea")) _onLongJump = true;
     }
 
     private void OnTriggerStay(Collider otherCollider)
@@ -143,13 +146,10 @@ public class Player : MonoBehaviour
         //Floor collider
         if (otherCollider.CompareTag("JumpingArea"))
         {
-            
-            
             _canJump = true;
             _jumping = false;
             _jumpingSpeed = normalJumpingSpeed;
             _jumpingTimer = 0;
-            
         }
         //Wall collider
         else if (otherCollider.CompareTag("WallJumpingArea"))
@@ -157,16 +157,16 @@ public class Player : MonoBehaviour
             _canWallJump = true;
             _wallJumpLeft = transform.position.x < otherCollider.transform.position.x;
         }
-        
-        if (otherCollider.GetComponent<LongJumpBlock>() != null) _jumpingSpeed = longJumpingSpeed;
+
         
     }
 
     private void OnTriggerExit(Collider otherCollider)
     {
-        //Wall collider
+        //Leaving wall area
         if (otherCollider.CompareTag("WallJumpingArea")) _canWallJump = false;
 
+        //Leaving speed up area
         if (otherCollider.GetComponent<SpeedArea>() != null)
         {
             var speedArea = otherCollider.GetComponent<SpeedArea>();
@@ -174,6 +174,7 @@ public class Player : MonoBehaviour
             else if (speedArea.direction == Direction.Right) _onSpeedAreaRight = false;
         }
 
-        if (otherCollider.GetComponent<LongJumpBlock>() != null) _onLongJump = false;
+        //Leaving long jump area
+        if (otherCollider.CompareTag("LongJumpArea")) _onLongJump = false;
     }
 }

@@ -7,6 +7,7 @@ TagManager:
   - JumpingArea
   - WallJumpingArea
   - Destructable
+  - LongJumpArea
   layers:
   - Default
   - TransparentFX
