@@ -18,13 +18,17 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Following the player
-        Vector3 targetPosition= new Vector3(
-            target.transform.position.x + offset.x,
-            target.transform.position.y + offset.y, 
-            transform.position.z 
-        );
-        //Smooth follow
-        transform.position = Vector3.Lerp(transform.position, targetPosition, speed);
+        Player player = target.GetComponent<Player>();
+        if (player.Dead == false)
+        {
+            //Following the player
+            Vector3 targetPosition= new Vector3(
+                target.transform.position.x + offset.x,
+                target.transform.position.y + offset.y, 
+                transform.position.z 
+            );
+            //Smooth follow
+            transform.position = Vector3.Lerp(transform.position, targetPosition, speed);
+        }
     }
 }

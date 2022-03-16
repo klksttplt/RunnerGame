@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleEnemy : MonoBehaviour
+public class SimpleEnemy : Enemy
 {
     public float speed = 3f;
     public float movementAmplitude = 4f;

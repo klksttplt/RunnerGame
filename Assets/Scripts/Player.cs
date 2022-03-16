@@ -23,12 +23,13 @@ public class Player : MonoBehaviour
 
     public Action onCollectCoin;
 
-    private int _jumpCount = 0;
+    //private int _jumpCount = 0;
 
     private float _speed;
     private float _jumpingTimer = 0f;
     private float _jumpingSpeed;
 
+    private bool _dead = false;
     private bool _canJump = false;
     private bool _jumping = false;
     private bool _canWallJump = false;
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour
     private bool _onSpeedAreaLeft = false;
     private bool _onSpeedAreaRight = false;
     private bool _onLongJump = false;
+
+    public bool Dead => _dead;
 
     // Start is called before the first frame update
     private void Start()
@@ -48,6 +51,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (_dead) return;
+
         //Accelerate the player 
         _speed += acceleration * Time.deltaTime;
 
@@ -74,12 +79,8 @@ public class Player : MonoBehaviour
 
         //Player can jump
         if (pressingJumpButton)
-        {
             if (_canJump)
-            {
                 _jumping = true;
-            }
-        }
 
         //Checking if player is paused
         if (_pause && pressingJumpButton) _pause = false;
@@ -103,12 +104,10 @@ public class Player : MonoBehaviour
 
         //Make the player wall jump
         if (_canWallJump)
-        {
             //_speed = 0;
-            
+
             if (pressingJumpButton)
             {
-                //Debug.Log("Pressing jump wall");
                 _canWallJump = false;
 
                 _speed = _wallJumpLeft ? -horizontalWallJumpingSpeed : horizontalWallJumpingSpeed;
@@ -119,12 +118,19 @@ public class Player : MonoBehaviour
                     GetComponent<Rigidbody>().velocity.z
                 );
             }
-        }
     }
 
     public void Pause()
     {
         _pause = true;
+    }
+
+    private void Kill()
+    {
+        _dead = true;
+        GetComponent<Rigidbody>().AddForce(new Vector3(0, 400, -2));
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     private void OnTriggerEnter(Collider otherCollider)
@@ -146,6 +152,13 @@ public class Player : MonoBehaviour
 
         //Long jump area
         if (otherCollider.CompareTag("LongJumpArea")) _onLongJump = true;
+
+        //Player dies
+        if (otherCollider.GetComponent<Enemy>())
+        {
+           
+            Kill();
+        }
     }
 
     private void OnTriggerStay(Collider otherCollider)
@@ -164,8 +177,6 @@ public class Player : MonoBehaviour
             _canWallJump = true;
             _wallJumpLeft = transform.position.x < otherCollider.transform.position.x;
         }
-
-        
     }
 
     private void OnTriggerExit(Collider otherCollider)
