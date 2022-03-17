@@ -147,6 +147,12 @@ public class Player : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
     }
 
+    private void ApplyPowerUp()
+    {
+        
+        
+    }
+
     private void OnTriggerEnter(Collider otherCollider)
     {
         //Collecting coins
@@ -172,6 +178,14 @@ public class Player : MonoBehaviour
         {
             var enemy = otherCollider.GetComponent<Enemy>();
             if (enemy.Dead == false) Kill();
+        }
+        
+        //Collect the power up
+        if (otherCollider.GetComponent<PowerUp>() != null)
+        {
+            PowerUp powerUp = otherCollider.GetComponent<PowerUp>();
+            powerUp.Collect();
+            ApplyPowerUp();
         }
     }
 
