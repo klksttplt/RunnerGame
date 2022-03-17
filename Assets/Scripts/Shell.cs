@@ -33,7 +33,7 @@ public class Shell : MonoBehaviour
             Debug.Log("''");
             Destroy(other.gameObject);
         }
-        else if (other.GetComponent<Brick>())
+        else if (other.GetComponent<Brick>() || other.CompareTag("WallJumpingArea"))
         {
             if (transform.position.x < other.transform.position.x && _movingRight)
                 _movingRight = false;
