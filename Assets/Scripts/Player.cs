@@ -8,7 +8,9 @@ using Debug = UnityEngine.Debug;
 public class Player : MonoBehaviour
 {
     [Header("Visuals")] public GameObject model;
-    
+    public GameObject normalModel;
+    public GameObject bigModel;
+
     [Header("Acceleration")] public float acceleration = 2.5f;
     public float deacceleration = 5f;
 
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour
     public float horizontalWallJumpingSpeed = 3.5f;
 
     [Header("Powerups")] public float invincibilityDuration = 5f;
+    public float sizeUpDuration = 5f;
 
     public Action onCollectCoin;
 
@@ -43,14 +46,19 @@ public class Player : MonoBehaviour
     private bool _onSpeedAreaRight = false;
     private bool _onLongJump = false;
 
-    private bool _hasPowerUp = false;
-    private bool _hasInvincibility = false;
-
+    private bool _isInvinsible = false;
+    private bool _isSizedUp = false;
+    
+    public bool hasInvincibility = false;
+    public bool hasSizeUp = false;
+    
     public bool Dead => _dead;
 
     // Start is called before the first frame update
     private void Start()
     {
+        normalModel.SetActive(true);
+        bigModel.SetActive(false);
         _speed = startSpeed;
         _jumpingSpeed = normalJumpingSpeed;
     }
@@ -126,15 +134,56 @@ public class Player : MonoBehaviour
                     GetComponent<Rigidbody>().velocity.z
                 );
             }
+        //Apply size-up power up
+        if (hasSizeUp)
+        {
+            Debug.Log("is sized up " + _isSizedUp);
+            ApplySizeUp();
+        }
+        
     }
 
 
+    private void ApplySizeUp()
+    {
+        Debug.Log("applying size up");
+        _isSizedUp = true;
+        StartCoroutine(SizeUpRoutine());
+    }
+
+    private IEnumerator SizeUpRoutine()
+    {
+        
+        float initialTime = sizeUpDuration * 0.75f;
+        
+        normalModel.SetActive(false);
+        bigModel.SetActive(true);
+        yield return new WaitForSeconds(initialTime);
+
+        float finalTime = sizeUpDuration * 0.25f;
+        int finalBlinks = 10;
+        
+        for (int i = 0; i < finalBlinks; i++)
+        {
+            bigModel.SetActive(!bigModel.activeSelf);
+            yield return new WaitForSeconds(finalTime/finalBlinks);
+        }
+
+        bigModel.SetActive(false);
+        normalModel.SetActive(true);
+
+        yield return new WaitForSeconds(sizeUpDuration);
+        _isSizedUp = false;
+
+
+    }
+    
     private void ApplyInvincibility()
     {
-        _hasInvincibility = true;
+        _isInvinsible = true;
         StartCoroutine(InvincibilityRoutine());
     }
-
+    
     private IEnumerator InvincibilityRoutine()
     {
         //Slow blinks
@@ -161,7 +210,7 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(invincibilityDuration);
         
-        _hasInvincibility = false;
+        _isInvinsible = false;
     }
 
     public void Jump(bool hitEnemy = false)
@@ -190,11 +239,7 @@ public class Player : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
     }
 
-    private void ApplyPowerUp()
-    {
-        _hasPowerUp = true;
-    }
-
+    
     private void OnTriggerEnter(Collider otherCollider)
     {
         //Collecting coins
@@ -219,14 +264,14 @@ public class Player : MonoBehaviour
         if (otherCollider.GetComponent<Enemy>())
         {
             var enemy = otherCollider.GetComponent<Enemy>();
-            if (!_hasInvincibility && !enemy.Dead)
-                if (!_hasPowerUp)
+            if (!_isInvinsible && !enemy.Dead)
+                if (!hasInvincibility)
                 {
                     Kill();
                 }
                 else
                 {
-                    _hasPowerUp = false;
+                    hasInvincibility = false;
                     ApplyInvincibility();
                 }
         }
@@ -236,7 +281,10 @@ public class Player : MonoBehaviour
         {
             var powerUp = otherCollider.GetComponent<PowerUp>();
             powerUp.Collect();
-            ApplyPowerUp();
+            powerUp.Apply();
+            Debug.Log(hasInvincibility);
+            Debug.Log(hasSizeUp);
+            
         }
     }
 

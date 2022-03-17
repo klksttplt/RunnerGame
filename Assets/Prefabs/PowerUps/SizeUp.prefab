@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a91c5360032ab840b46ee2150ca99f2, type: 2}
+  - {fileID: 2100000, guid: fbfec4e4d68951143a1cab41bf7f5532, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,7 +137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a91c5360032ab840b46ee2150ca99f2, type: 2}
+  - {fileID: 2100000, guid: fbfec4e4d68951143a1cab41bf7f5532, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,10 +167,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4131943660047570030}
-  - component: {fileID: 4131943660047570029}
   - component: {fileID: 4131943660047570028}
+  - component: {fileID: 8407679376176810850}
   m_Layer: 0
-  m_Name: PowerUp
+  m_Name: SizeUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4131943660047570031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.89, y: 1.27, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4131943660393907926}
@@ -192,20 +192,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4131943660047570029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4131943660047570031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af36bd49e83e7494eb73d130f6a33053, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 4131943660393907927}
-  rotationSpeed: 100
 --- !u!65 &4131943660047570028
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -219,6 +205,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8407679376176810850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4131943660047570031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4488042445897408f8e57c90379232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 4131943660393907927}
+  effectPrefab: {fileID: 3809106586300775583, guid: d1ab1c7f3f822774ba82ae60ce2d7ff1,
+    type: 3}
+  rotationSpeed: 20
 --- !u!1 &4131943660393907927
 GameObject:
   m_ObjectHideFlags: 0
