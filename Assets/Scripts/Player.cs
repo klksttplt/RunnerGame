@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using UnityEngine;
@@ -6,6 +7,8 @@ using Debug = UnityEngine.Debug;
 
 public class Player : MonoBehaviour
 {
+    [Header("Visuals")] public GameObject model;
+    
     [Header("Acceleration")] public float acceleration = 2.5f;
     public float deacceleration = 5f;
 
@@ -20,6 +23,7 @@ public class Player : MonoBehaviour
     public float verticalWallJumpingSpeed = 5f;
     public float horizontalWallJumpingSpeed = 3.5f;
 
+    [Header("Powerups")] public float invincibilityDuration = 5f;
 
     public Action onCollectCoin;
 
@@ -38,6 +42,9 @@ public class Player : MonoBehaviour
     private bool _onSpeedAreaLeft = false;
     private bool _onSpeedAreaRight = false;
     private bool _onLongJump = false;
+
+    private bool _hasPowerUp = false;
+    private bool _hasInvincibility = false;
 
     public bool Dead => _dead;
 
@@ -122,6 +129,41 @@ public class Player : MonoBehaviour
     }
 
 
+    private void ApplyInvincibility()
+    {
+        _hasInvincibility = true;
+        StartCoroutine(InvincibilityRoutine());
+    }
+
+    private IEnumerator InvincibilityRoutine()
+    {
+        //Slow blinks
+        float initialWaitingTime = invincibilityDuration * 0.75f;
+        int initialBlinks = 20;
+
+        for (int i = 0; i < initialBlinks; i++)
+        {
+            model.SetActive(!model.activeSelf);
+            yield return new WaitForSeconds(initialWaitingTime / initialBlinks);
+        }
+
+        //Fast blinks
+        float finalWaitingTime = invincibilityDuration * 0.25f;
+        int finalBlinks = 35;
+        
+        for (int i = 0; i < finalBlinks; i++)
+        {
+            model.SetActive(!model.activeSelf);
+            yield return new WaitForSeconds(finalWaitingTime / finalBlinks);
+        }
+        
+        model.SetActive(true);
+
+        yield return new WaitForSeconds(invincibilityDuration);
+        
+        _hasInvincibility = false;
+    }
+
     public void Jump(bool hitEnemy = false)
     {
         _jumping = true;
@@ -139,6 +181,7 @@ public class Player : MonoBehaviour
         _pause = true;
     }
 
+
     private void Kill()
     {
         _dead = true;
@@ -149,8 +192,7 @@ public class Player : MonoBehaviour
 
     private void ApplyPowerUp()
     {
-        
-        
+        _hasPowerUp = true;
     }
 
     private void OnTriggerEnter(Collider otherCollider)
@@ -177,13 +219,22 @@ public class Player : MonoBehaviour
         if (otherCollider.GetComponent<Enemy>())
         {
             var enemy = otherCollider.GetComponent<Enemy>();
-            if (enemy.Dead == false) Kill();
+            if (!_hasInvincibility && !enemy.Dead)
+                if (!_hasPowerUp)
+                {
+                    Kill();
+                }
+                else
+                {
+                    _hasPowerUp = false;
+                    ApplyInvincibility();
+                }
         }
-        
+
         //Collect the power up
         if (otherCollider.GetComponent<PowerUp>() != null)
         {
-            PowerUp powerUp = otherCollider.GetComponent<PowerUp>();
+            var powerUp = otherCollider.GetComponent<PowerUp>();
             powerUp.Collect();
             ApplyPowerUp();
         }
