@@ -48,10 +48,10 @@ public class Player : MonoBehaviour
 
     private bool _isInvinsible = false;
     private bool _isSizedUp = false;
-    
+
     public bool hasInvincibility = false;
     public bool hasSizeUp = false;
-    
+
     public bool Dead => _dead;
 
     // Start is called before the first frame update
@@ -134,39 +134,40 @@ public class Player : MonoBehaviour
                     GetComponent<Rigidbody>().velocity.z
                 );
             }
+
         //Apply size-up power up
         if (hasSizeUp)
         {
-            Debug.Log("is sized up " + _isSizedUp);
+            hasSizeUp = false;
             ApplySizeUp();
         }
-        
     }
 
 
     private void ApplySizeUp()
     {
-        Debug.Log("applying size up");
         _isSizedUp = true;
         StartCoroutine(SizeUpRoutine());
     }
 
     private IEnumerator SizeUpRoutine()
     {
-        
-        float initialTime = sizeUpDuration * 0.75f;
-        
+        var initialTime = sizeUpDuration * 0.75f;
+
         normalModel.SetActive(false);
         bigModel.SetActive(true);
         yield return new WaitForSeconds(initialTime);
 
-        float finalTime = sizeUpDuration * 0.25f;
-        int finalBlinks = 10;
-        
-        for (int i = 0; i < finalBlinks; i++)
+        var finalTime = sizeUpDuration * 0.25f;
+        var finalBlinks = 10;
+
+        for (var i = 0; i < finalBlinks; i++)
         {
-            bigModel.SetActive(!bigModel.activeSelf);
-            yield return new WaitForSeconds(finalTime/finalBlinks);
+            Debug.Log(i);
+            bigModel.SetActive(i % 2 == 0 ? false : true);
+            normalModel.SetActive(i % 2 != 0 ? false : true);
+
+            yield return new WaitForSeconds(finalTime / finalBlinks);
         }
 
         bigModel.SetActive(false);
@@ -174,42 +175,40 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(sizeUpDuration);
         _isSizedUp = false;
-
-
     }
-    
+
     private void ApplyInvincibility()
     {
         _isInvinsible = true;
         StartCoroutine(InvincibilityRoutine());
     }
-    
+
     private IEnumerator InvincibilityRoutine()
     {
         //Slow blinks
-        float initialWaitingTime = invincibilityDuration * 0.75f;
-        int initialBlinks = 20;
+        var initialWaitingTime = invincibilityDuration * 0.75f;
+        var initialBlinks = 20;
 
-        for (int i = 0; i < initialBlinks; i++)
+        for (var i = 0; i < initialBlinks; i++)
         {
             model.SetActive(!model.activeSelf);
             yield return new WaitForSeconds(initialWaitingTime / initialBlinks);
         }
 
         //Fast blinks
-        float finalWaitingTime = invincibilityDuration * 0.25f;
-        int finalBlinks = 35;
-        
-        for (int i = 0; i < finalBlinks; i++)
+        var finalWaitingTime = invincibilityDuration * 0.25f;
+        var finalBlinks = 35;
+
+        for (var i = 0; i < finalBlinks; i++)
         {
             model.SetActive(!model.activeSelf);
             yield return new WaitForSeconds(finalWaitingTime / finalBlinks);
         }
-        
+
         model.SetActive(true);
 
         yield return new WaitForSeconds(invincibilityDuration);
-        
+
         _isInvinsible = false;
     }
 
@@ -239,7 +238,7 @@ public class Player : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
     }
 
-    
+
     private void OnTriggerEnter(Collider otherCollider)
     {
         //Collecting coins
@@ -282,9 +281,6 @@ public class Player : MonoBehaviour
             var powerUp = otherCollider.GetComponent<PowerUp>();
             powerUp.Collect();
             powerUp.Apply();
-            Debug.Log(hasInvincibility);
-            Debug.Log(hasSizeUp);
-            
         }
     }
 

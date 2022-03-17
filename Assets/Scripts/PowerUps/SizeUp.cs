@@ -20,6 +20,6 @@ public class SizeUp : PowerUp
     {
         base.Apply();
         GameObject.Find("Player").GetComponent<Player>().hasSizeUp = true;
-        Debug.Log("received size up ");
+        
     }
 }
