@@ -45,14 +45,17 @@ public class Player : MonoBehaviour
     private bool _onSpeedAreaLeft = false;
     private bool _onSpeedAreaRight = false;
     private bool _onLongJump = false;
+    private bool _finished = false;
+    
 
     private bool _isInvinsible = false;
-    private bool _isSizedUp = false;
+    //private bool _isSizedUp = false;
 
     public bool hasInvincibility = false;
     public bool hasSizeUp = false;
 
     public bool Dead => _dead;
+    public bool Finished => _finished;
 
     // Start is called before the first frame update
     private void Start()
@@ -146,7 +149,7 @@ public class Player : MonoBehaviour
 
     private void ApplySizeUp()
     {
-        _isSizedUp = true;
+        //_isSizedUp = true;
         StartCoroutine(SizeUpRoutine());
     }
 
@@ -174,7 +177,7 @@ public class Player : MonoBehaviour
         normalModel.SetActive(true);
 
         yield return new WaitForSeconds(sizeUpDuration);
-        _isSizedUp = false;
+        //_isSizedUp = false;
     }
 
     private void ApplyInvincibility()
@@ -281,6 +284,13 @@ public class Player : MonoBehaviour
             var powerUp = otherCollider.GetComponent<PowerUp>();
             powerUp.Collect();
             powerUp.Apply();
+        }
+        
+        //Reach the finish
+        if (otherCollider.GetComponent<Finish>() != null)
+        {
+            _finished = true;
+            hasInvincibility = true;
         }
     }
 
