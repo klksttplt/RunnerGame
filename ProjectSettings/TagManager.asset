@@ -8,6 +8,7 @@ TagManager:
   - WallJumpingArea
   - Destructable
   - LongJumpArea
+  - Enemy
   layers:
   - Default
   - TransparentFX
