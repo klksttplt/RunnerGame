@@ -20,7 +20,7 @@ public class Shell : MonoBehaviour
     {
         transform.RotateAround(transform.position, Vector3.up, rotationSpeed * Time.deltaTime);
         transform.position = new Vector3(
-            transform.position.x + movementSpeed * (_movingRight ? 1 : -1) * Time.deltaTime,
+            transform.position.x + movementSpeed * (_movingRight ? -1 : 1) * Time.deltaTime,
             transform.position.y,
             transform.position.z
         );
@@ -30,7 +30,6 @@ public class Shell : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("''");
             Destroy(other.gameObject);
         }
         else

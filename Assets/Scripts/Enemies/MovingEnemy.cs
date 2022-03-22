@@ -27,8 +27,14 @@ public class MovingEnemy : Enemy
         );
 
         if (_movingLeft == true && transform.position.x < _initialPosition.x - movementAmplitude / 2)
+        {
             _movingLeft = false;
+            transform.Rotate(0, 180, 0);
+        }
         else if (_movingLeft == false && transform.position.x > _initialPosition.x + movementAmplitude / 2)
+        {
             _movingLeft = true;
+            transform.Rotate(0, 180, 0);
+        }
     }
 }
