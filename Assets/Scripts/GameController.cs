@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +17,7 @@ public class GameController : MonoBehaviour
     public float restartTimer = 3f;
     public float finishTimer = 3f;
 
-    public Scene nextScene;
-
+    
     private bool _finished = false;
 
     // Start is called before the first frame update
@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
             finishTimer -= Time.deltaTime;
             if (finishTimer <= 0)
             {
-                SceneManager.LoadScene(nextScene.name);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
     }
