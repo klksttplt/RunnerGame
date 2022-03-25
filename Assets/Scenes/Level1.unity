@@ -621,7 +621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &198581428
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2164,10 +2164,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 2a49ea629e5fb5d4ab802bbe67f0791d, type: 3}
     m_FontSize: 16
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
@@ -2229,7 +2229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117745038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.3, y: 15.3, z: 0}
+  m_LocalPosition: {x: -56.7, y: 16.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 876761079}
@@ -2255,10 +2255,10 @@ TextMesh:
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 2a49ea629e5fb5d4ab802bbe67f0791d, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
 --- !u!23 &1117745041
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2277,7 +2277,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2a49ea629e5fb5d4ab802bbe67f0791d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4027,7 +4027,7 @@ PrefabInstance:
     - target: {fileID: 2693206814541125158, guid: 5330cc8b969d80a469d05cf0cb7a6b54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.8
+      value: -0.29999924
       objectReference: {fileID: 0}
     - target: {fileID: 2693206814541125158, guid: 5330cc8b969d80a469d05cf0cb7a6b54,
         type: 3}
@@ -4116,7 +4116,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 503.58936, y: 167.8631}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2086624217
 MonoBehaviour:
@@ -4131,17 +4131,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5471698, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 2a49ea629e5fb5d4ab802bbe67f0791d, type: 3}
     m_FontSize: 30
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
@@ -4350,7 +4350,7 @@ PrefabInstance:
     - target: {fileID: 2672031306820147495, guid: ec742bdb4c73bde45b172a9f9ec4cc2a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.6
+      value: 16.9
       objectReference: {fileID: 0}
     - target: {fileID: 2672031306820147495, guid: ec742bdb4c73bde45b172a9f9ec4cc2a,
         type: 3}
