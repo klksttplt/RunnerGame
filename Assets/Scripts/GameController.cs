@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     public float restartTimer = 3f;
     public float finishTimer = 3f;
 
-    
+
     private bool _finished = false;
 
     // Start is called before the first frame update
@@ -37,10 +37,7 @@ public class GameController : MonoBehaviour
         if (player.Dead)
         {
             restartTimer -= Time.deltaTime;
-            if (restartTimer <= 0)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            if (restartTimer <= 0) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         if (player.Finished)
@@ -50,10 +47,13 @@ public class GameController : MonoBehaviour
                 _finished = true;
                 OnFinish();
             }
+
             finishTimer -= Time.deltaTime;
             if (finishTimer <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                if (SceneManager.GetActiveScene().buildIndex != 7)
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                else SceneManager.LoadScene(0);
             }
         }
     }
@@ -62,7 +62,8 @@ public class GameController : MonoBehaviour
     {
         finishText.enabled = true;
         scoreText.enabled = false;
-        finishText.text = "Level "+ (SceneManager.GetActiveScene().buildIndex + 1)+" finished!" + "\nYour score: " + _score;
+        finishText.text = "Level " + (SceneManager.GetActiveScene().buildIndex + 1) + " finished!" + "\nYour score: " +
+                          _score;
     }
 
     private void OnCollectCoin()
@@ -80,6 +81,4 @@ public class GameController : MonoBehaviour
     {
         invincibleText.enabled = false;
     }
-    
-    
 }
