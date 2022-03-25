@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public Player player;
     public Text scoreText;
     public Text finishText;
+    public Text invincibleText;
 
     private int _score;
     public float restartTimer = 3f;
@@ -24,7 +25,10 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         player.onCollectCoin = OnCollectCoin;
+        player.onCollectInvincibility = OnCollectInvincibility;
+        player.onEndInvincibility = OnEndInvincibility;
         finishText.enabled = false;
+        invincibleText.enabled = false;
     }
 
     // Update is called once per frame
@@ -58,7 +62,7 @@ public class GameController : MonoBehaviour
     {
         finishText.enabled = true;
         scoreText.enabled = false;
-        finishText.text = SceneManager.GetActiveScene().name + " finished!" + "\nYour score: " + _score;
+        finishText.text = "Level "+ (SceneManager.GetActiveScene().buildIndex + 1)+" finished!" + "\nYour score: " + _score;
     }
 
     private void OnCollectCoin()
@@ -66,4 +70,16 @@ public class GameController : MonoBehaviour
         _score++;
         scoreText.text = "Score: " + _score;
     }
+
+    private void OnCollectInvincibility()
+    {
+        invincibleText.enabled = true;
+    }
+
+    private void OnEndInvincibility()
+    {
+        invincibleText.enabled = false;
+    }
+    
+    
 }

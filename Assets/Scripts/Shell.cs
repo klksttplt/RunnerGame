@@ -32,6 +32,10 @@ public class Shell : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        else if (other.GetComponent<Player>() != null)
+        {
+            GetComponent<Player>().Kill();
+        }
         else
         {
             if (transform.position.x < other.transform.position.x && _movingRight)

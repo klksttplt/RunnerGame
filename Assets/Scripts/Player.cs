@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     public float sizeUpDuration = 5f;
 
     public Action onCollectCoin;
+    public Action onCollectInvincibility;
+    public Action onEndInvincibility;
 
     //private int _jumpCount = 0;
 
@@ -233,7 +235,7 @@ public class Player : MonoBehaviour
     }
 
 
-    private void Kill()
+    public void Kill()
     {
         _dead = true;
         GetComponent<Rigidbody>().AddForce(new Vector3(0, 400, -2));
@@ -275,6 +277,7 @@ public class Player : MonoBehaviour
                 {
                     hasInvincibility = false;
                     ApplyInvincibility();
+                    onEndInvincibility();
                 }
         }
 
@@ -284,6 +287,10 @@ public class Player : MonoBehaviour
             var powerUp = otherCollider.GetComponent<PowerUp>();
             powerUp.Collect();
             powerUp.Apply();
+            if (otherCollider.GetComponent<Invincibility>() != null)
+            {
+                onCollectInvincibility();
+            }
         }
         
         //Reach the finish
