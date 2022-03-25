@@ -18,9 +18,9 @@ public class PowerUp : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        model.transform.RotateAround(model.transform.position, Vector3.up, rotationSpeed * Time.deltaTime);
-        model.transform.RotateAround(model.transform.position, Vector3.right, rotationSpeed * Time.deltaTime);
-        model.transform.RotateAround(model.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
+        model.transform.RotateAround(model.transform.position, Vector3.up, rotationSpeed * Time.deltaTime); 
+        //model.transform.RotateAround(model.transform.position, Vector3.right, rotationSpeed * Time.deltaTime);
+        //model.transform.RotateAround(model.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
     }
 
     public virtual void Collect()
